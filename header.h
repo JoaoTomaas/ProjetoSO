@@ -6,6 +6,10 @@ typedef struct sProduto{
 	struct sProduto * next;
 }Produto;
 
+typedef struct sNomeProduto {
+	char * nome
+}NomeProduto;
+
 
 typedef struct sArmazem{
 	int id_armz;
