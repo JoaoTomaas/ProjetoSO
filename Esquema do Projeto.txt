@@ -1,0 +1,20 @@
+Simulation Manager.c
+-> criar o MQ e a SHM -> sysv(tem cenas para mq, shm e semaph)
+-> criar os vários processos armazém (fork e depois exec(), que vai levar toda a info para criar o processo armazém)
+-> criar o processo Central
+-> criar os handlers para os sinais (SIGINT E SIGUSR1)
+
+
+Central.c
+-> Saber as coordenadas dos armazéns e dos seus id's (lista ligada list_armz, em que cada nó é do tipo Armazém)
+-> Criar as threads e criar uma pool de threads dos drones
+-> Criar o named pip (Podemos ligar ao processo pai)
+-> Ler e escrever na SHM
+-> Deixar os drones ler e escrever na MQ
+
+
+Armazém.c
+-> Cada armazém tem um id_único
+-> Variável stock (Lista ligada de nós do tipo Produto - nome_prod e qtd)
+-> Atualizar a SHM
+-> Ouvir e falar com a MQ
