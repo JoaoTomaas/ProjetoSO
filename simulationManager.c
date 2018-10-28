@@ -68,7 +68,7 @@ void * create_shm()
 int create_file(char *nome)
 {
 	FILE *fp;
-	if (!(fp = fopen("keys.txt", 'w')))
+	if (!(fp = fopen(nome, 'w')))
 	{
 		/*printf("Erro ao criar ficheiro 'keys.txt'\n");*/
 		return -1;
