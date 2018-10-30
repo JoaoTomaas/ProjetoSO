@@ -18,3 +18,7 @@ Armazém.c
 -> Variável stock (Lista ligada de nós do tipo Produto - nome_prod e qtd)
 -> Atualizar a SHM
 -> Ouvir e falar com a MQ (META 2)
+
+
+Link Threadpool:
+http://people.clarkson.edu/~jmatthew/cs644.archive/cs644.fa2001/proj/locksmith/code/ExampleTest/threadpool.c
