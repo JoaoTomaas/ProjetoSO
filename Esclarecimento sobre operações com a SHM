@@ -1,0 +1,15 @@
+ARMAZÉM
+> Ao ser abastecido periodicamente, o Armazém atualiza o stock na SHM do stock
+> Atualizar na SHM todos os produtos que disponibiliza e a quantidade de cada um em stock (Repetido)
+
+
+CENTRAL
+> Recebe as encomendas pelo named pipe e vai ler da SHM para saber se há stock suficiente para satisfazer o pedido
+
+
+
+
+
+
+EXTRA:
+> Drones comunicam com os armazéns através da MQ
