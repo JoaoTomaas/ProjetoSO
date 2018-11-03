@@ -14,6 +14,7 @@
 #define ID_SHM_STOCK 3
 #define MAX_CHARS 50
 #define INT_TO_CHAR_MAX 12
+#define PIPE_NAME "namedpipe" /*Última edição*/
 
 typedef struct sNomeProduto {
 	char nome[MAX_CHARS];
