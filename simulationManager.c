@@ -1,6 +1,58 @@
 #include "header.h"
 
 
+void terminacao_controlada (){
+	int i, n_drones = 4; //Variavel de teste
+
+	for (i = 0; i < n_drones; i++){
+		pthread_join (threadp[i], NULL);
+		printf("Thread %d joined\n", i);
+	}
+
+	//Terminar central
+
+	//Terminar processos armazem
+
+	//Terminar simulation manager
+
+
+	close (fd);
+	unlink (PIPE_NAME);
+
+	shmdt (shm_addr_arm);
+	shmctl (shm_arm_id, IPC_RMID, NULL);
+
+	shmdt (shm_addr_stock);
+	shmctl (shm_stock_id, IPC_RMID, NULL);
+
+	shmdt (shm_addr_est);
+	shmctl (shm_est_id, IPC_RMID, NULL);
+
+	pthread_mutex_destroy (&mutex); //Para destroir o mutex
+	
+	printf("Exiting...\n");
+}
+
+
+void sigint_handler (int signum){
+	char c;
+
+	signal(signum, SIG_IGN); /*Ignorar dentro do handler porque pode ser acionado enquanto o handler está a processar o sinal anterior*/
+	
+	printf("\n CTRL+C pressed. Do you want to exit? ");
+	c = getchar();
+
+	if (c == 'y' || c == 'Y'){
+		/*Fechar e libertar os recursos necessários*/
+		terminacao_controlada();
+		exit(0);
+	}
+	else{
+		signal(SIGINT, sigint_handler); /*Reinstanlar o sinal handler para que seja possível apanhar este sinal se for acionado de novo*/
+	}
+}
+
+
 int main()
 {
 	pid_t pid;
@@ -17,6 +69,16 @@ int main()
 	NomeProduto *tmp_nome_produto;
 	Produto_Qtd *tmp_prod_qtd;
 	*/
+
+	/* SIGNAL HANDLING (start)*/
+	sigset_t set;
+	sigfillset (&set);
+	sigdelset (&set, SIGINT);
+	sigdelset (&set, SIGUSR1);
+	sigprocmask (SIG_SETMASK, &set, NULL);
+
+	signal (SIGINT, sigint_handler); /*CTRL+C handler*/
+	/* SIGNAL HANDLING (finish)*/
 
 	nomes_produtos = NULL;
 	armazens = NULL;
@@ -62,7 +124,7 @@ int main()
 
 
 	/*	Criar processos armazens	*/
-	for (i=0; i<num_armazens; i++)
+	for (i=0; i < num_armazens; i++)
 	{
 		pid = fork();
 		if (pid == 0)
